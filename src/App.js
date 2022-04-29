@@ -1,6 +1,7 @@
 import rooms from "./data"
 import {RoomCard,HotelQuery} from "./Hotel Components/Hotel"
 
+
 const App = () => {
   return (
     <>
@@ -14,16 +15,21 @@ const App = () => {
 };
 
 const Header = () => {
-  return <h1>LovelyHotel.com</h1>;
+  return(
+    <>
+    <h1>LovelyHotel.com</h1>
+    <hr/>
+    </>
+    ); 
 };
 
 
 const Body = ({ rooms }) => {
   return (
     <>
-    <div style={{ overflow: "hidden" }}>
-      <div style={{ float: "left" }}>
-        {true ? "Hello" : "False"}
+    <div className="grid grid-cols-2">
+      <div >
+      <h2>These Rooms are Available</h2>
         {rooms.map((room) => (
           <RoomCard key={room.name} room={room} />
         ))}
@@ -39,8 +45,8 @@ const Footer = () => {
   return (
     <>
     <div>
-      <div style={{ float: "left" }}>Info + Contact</div>
-      <div style={{ float: "right" }}>Copyright</div>
+      <div >Info + Contact</div>
+      <div >Copyright</div>
     </div>
     </>
   );

@@ -1,29 +1,27 @@
 import HotelPicture from "../images/hotel.jpg";
+import "../index.css"
+
+
 
 const RoomCard = ({ room }) => {
   const people = getPeople(room.beds);
 
   return (
     <>
-    <div style={{ overflow: "hidden", padding: "5px" }}>
-      <img
-        style={{
-          float: "left",
-          maxWidth: "250px",
-          maxHeight: "300px",
-          marginRight: "15px",
-        }}
-        src={HotelPicture}
-        alt="Hotel Room"
-      />
-      <div style={{ float: "right" }}>
-        <b>{room.name}</b>
-        <p>Adults : {people.adults}</p>
-        <p>Kids : {people.children}</p>
-        <p>Price : {room.price}/night</p>
-        <p>Availability : {room.amount}</p>
+      <div className="grid grid-cols-2 content-center">
+        <img
+          className="rounded-md max-h-[80%] max-w-[80%]"
+          src={HotelPicture}
+          alt="Hotel Room"
+        />
+        <div>
+          <b>{room.name}</b>
+          <p>Adults : {people.adults}</p>
+          <p>Kids : {people.children}</p>
+          <p>Price : {room.price}/night</p>
+          <p>Availability : {room.amount}</p>
+        </div>
       </div>
-    </div>
     </>
   );
 };
@@ -36,41 +34,47 @@ const HotelQuery = () => {
 
   return (
     <>
-    <div style={{ textAlign: "left", padding: "10px", float: "right" }}>
-      <form
-        style={{ overflow: "hidden" }}
-        name="HotelSearch"
-        onSubmit={handleSubmit}
-      >
-        <div style={{ float: "left" }}>
-          <label htmlFor="adult">Num. Of Adults</label>
-          <br />
-          <input type="text" id="adult" name="adult" />
-          <br />
-        </div>
-        <div style={{ float: "left", marginLeft: "15px" }}>
-          <label htmlFor="child">Num. Of Children</label>
-          <br />
-          <input type="text" id="child" name="child" />
-          <br />
-        </div>
-        <div style={{ float: "left", marginLeft: "15px" }}>
-          <label htmlFor="duration">Duration</label>
-          <br />
-          <input type="text" id="duration" name="duration" />
-          <br />
-        </div>
-        <div style={{ float: "left", marginLeft: "15px" }}>
-          <br />
-          <input type="submit" value="Search" />
-        </div>
-      </form>
+      <div className="border-2 p-5 rounded-md container max-w-[500px] h-fit">
+        <form
+          name="HotelSearch"
+          onSubmit={handleSubmit}
+        >
+          <div className="grid grid-cols-2 grid-rows-2 place-items-center pt-3">
 
-      <div>
-        <p>Available Rooms:</p>
-        <div id="result"></div>
+
+            <div >
+              <label htmlFor="arrival">Arrival</label>
+              <br />
+              <input className="border-2 rounded-md" type="text" id="arrival" name="arrival" />
+            </div>
+            <div>
+              <label htmlFor="adult">Num. Of Adults</label>
+              <br />
+              <input className="border-2 rounded-md" type="text" id="adult" name="adult" />
+            </div>
+            <div >
+              <label htmlFor="child">Num. Of Children</label>
+              <br />
+              <input className="border-2 rounded-md" type="text" id="child" name="child" />
+            </div>
+
+            <div >
+              <label htmlFor="duration">Duration</label>
+              <br />
+              <input className="border-2 rounded-md" type="text" id="duration" name="duration" />
+            </div>
+
+
+          </div>
+          <div className="pt-5 pb-5 flex flex-row text-center justify-center">
+            <input className="w-full border-2 p-1 shadow-lg rounded-lg bg-sky-500 text-white" type="submit" value="Show Availability" />
+          </div>
+        </form>
+        <div>
+          <p>Available Rooms:</p>
+          <div id="result"></div>
+        </div>
       </div>
-    </div>
     </>
   );
 };
@@ -104,18 +108,15 @@ async function getHotel() {
 
     const response = await fetch(
       "https://hsrm-hotel-api.herokuapp.com/rooms?" +
-        new URLSearchParams({ adults: adult, children: child })
+      new URLSearchParams({ adults: adult, children: child })
     );
     const json = await response.json();
     const divElement = document.getElementById("result");
     let content = "";
 
-    console.log(json);
-
     for (const key of Object.keys(json)) {
-      content += `${json[key].amount}x ${json[key].name}, ${
-        json[key].price
-      }/Night Total Cost: ${json[key].price * duration}\n`;
+      content += `${json[key].amount}x ${json[key].name}, ${json[key].price
+        }/Night Total Cost: ${json[key].price * duration}\n`;
     }
 
     const res2 = content.split(/[\r\n]+/);
