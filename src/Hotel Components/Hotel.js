@@ -4,6 +4,7 @@ const RoomCard = ({ room }) => {
   const people = getPeople(room.beds);
 
   return (
+    <>
     <div style={{ overflow: "hidden", padding: "5px" }}>
       <img
         style={{
@@ -23,6 +24,7 @@ const RoomCard = ({ room }) => {
         <p>Availability : {room.amount}</p>
       </div>
     </div>
+    </>
   );
 };
 
@@ -33,6 +35,7 @@ const HotelQuery = () => {
   }
 
   return (
+    <>
     <div style={{ textAlign: "left", padding: "10px", float: "right" }}>
       <form
         style={{ overflow: "hidden" }}
@@ -68,6 +71,7 @@ const HotelQuery = () => {
         <div id="result"></div>
       </div>
     </div>
+    </>
   );
 };
 
