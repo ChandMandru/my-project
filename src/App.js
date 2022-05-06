@@ -1,12 +1,17 @@
-import { RoomCard, HotelQuery } from "./Hotel Components/Hotel";
 import { useState } from "react";
+import { HotelQuery, RoomCard, LoginButton } from "./Hotel Components/Hotel";
+import { LoginContextProvider } from "./Hotel Components/LoginContextProvider";
+import { RoomContextProvider, useRoomContext } from "./Hotel Components/useRoomContext";
+import { Form } from "./Hotel Components/BookingForm";
 
 const App = () => {
   return (
     <>
       <div className="App min-h-full">
         <Header />
-        <Body />
+        <RoomContextProvider>
+          <Body />
+        </RoomContextProvider>
         <Footer />
       </div>
     </>
@@ -19,6 +24,9 @@ const Header = () => {
       <h1 className="text-[35px] text-center font-mono p-4 ">
         LovelyHotel.com
       </h1>
+      <LoginContextProvider>
+        <LoginButton/>
+      </LoginContextProvider>
       <hr />
     </>
   );
@@ -33,9 +41,11 @@ const Body = () => {
     arrival: "",
   });
 
+  const RoomContext = useRoomContext();
+
   return (
     <>
-      <div className="grid grid-cols-2 pt-6 gap-5 ml-20 mr-20">
+      <div className="grid grid-cols-2 grid-rows-2 pt-6 gap-5 ml-20 mr-20">
         <div className="border-2 rounded-md">
           <h2 className="text-[25px] font-bold text-center font-mono pb-7">
             These Rooms are Available
@@ -52,6 +62,7 @@ const Body = () => {
           </div>
         </div>
         <HotelQuery setRooms={setRooms} filter={filter} setFilter={setFilter} />
+        {RoomContext.room && <Form/>}
       </div>
     </>
   );
