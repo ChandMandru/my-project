@@ -1,17 +1,17 @@
+import { useContext, useEffect, useState } from "react";
 import HotelPicture from "../images/hotel.jpg";
 import "../index.css";
-import { useRoomData } from "./useRoomData";
-import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "./LoginContextProvider";
 import { useRoomContext } from "./useRoomContext";
+import { useRoomData } from "./useRoomData";
 
-const RoomCard = ({ room, duration,bookable=true}) => {
+const RoomCard = ({ room, duration,bookable=true,className="grid grid-cols-2 p-3 gap-4 max-w-md max-h-md"}) => {
   const people = getPeople(room.beds);
   const roomContex = useRoomContext();
 
   return (
     <>
-      <div className="grid grid-cols-2 p-3 gap-4 max-w-md max-h-md">
+      <div className={className ? className : ""}>
         <img className="rounded-md" src={HotelPicture} alt="Hotel Room" />
         <div>
           <b>{room.name}</b>
@@ -57,7 +57,7 @@ const HotelQuery = ({ setRooms, filter, setFilter }) => {
 
   return (
     <>
-      <div className="border-2 p-5 rounded-md max-w-md min-h-full place-self-end">
+      <div className="border-2 p-5 rounded-md h-fit place-self-center">
         <form
           name="HotelSearch"
           onSubmit={handleSubmit}

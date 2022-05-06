@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { HotelQuery, RoomCard, LoginButton } from "./Hotel Components/Hotel";
+import { Form } from "./Hotel Components/BookingForm";
+import { HotelQuery, LoginButton, RoomCard } from "./Hotel Components/Hotel";
 import { LoginContextProvider } from "./Hotel Components/LoginContextProvider";
 import { RoomContextProvider, useRoomContext } from "./Hotel Components/useRoomContext";
-import { Form } from "./Hotel Components/BookingForm";
 
 const App = () => {
   return (
     <>
-      <div className="App min-h-full">
+      <div className="App">
         <Header />
         <RoomContextProvider>
           <Body />
@@ -41,16 +41,19 @@ const Body = () => {
     arrival: "",
   });
 
-  const RoomContext = useRoomContext();
+  const RoomContext = useRoomContext();  
 
   return (
     <>
-      <div className="grid grid-cols-2 grid-rows-2 pt-6 gap-5 ml-20 mr-20">
-        <div className="border-2 rounded-md">
+    {!RoomContext.room && (
+      <>
+      <button>Fade</button>
+      <div className="grid grid-cols-2 grid-rows-1 p-6 gap-5 ml-20 mr-20">
+        <div className="border-2 rounded-md h-fit">
           <h2 className="text-[25px] font-bold text-center font-mono pb-7">
             These Rooms are Available
           </h2>
-          <div className="grid grid-cols-2 min-w-auto">
+          <div className="grid grid-cols-2">
             {rooms &&
               rooms.map((room) => (
                 <RoomCard
@@ -62,16 +65,22 @@ const Body = () => {
           </div>
         </div>
         <HotelQuery setRooms={setRooms} filter={filter} setFilter={setFilter} />
-        {RoomContext.room && <Form/>}
+      </div>
+      </>
+    )}
+      <div className="grid place-items-center ml-20 mr-20">
+      {RoomContext.room && <Form/>}
       </div>
     </>
   );
 };
 
+  
+
 const Footer = () => {
   return (
     <>
-      <footer className="absolute inset-x-0 bottom-0 grid grid-cols-2 p-6 ml-20 mr-20 min-w-auto bg-blue-700 text-white">
+      <footer className="sticky top-[100vh] grid grid-cols-2 p-6 ml-20 mr-20 min-w-auto bg-blue-700 text-white">
         <div className="text-left p-3">
           We hope that you will enjoy your stay at our hotel! <br />
           if you have any questions or concerns <br />
@@ -84,8 +93,8 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
           >
-            write us
-          </a>{" "}
+          write us
+          </a>
           <br />
         </div>
         <p className="place-self-end">Copyright 2022 LovelyHotel.com</p>
